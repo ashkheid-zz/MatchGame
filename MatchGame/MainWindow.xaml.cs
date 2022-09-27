@@ -37,11 +37,9 @@ namespace MatchGame
     {
       tenthsOfSecondsElapsed++;
       TimeTextBlock.Text = (tenthsOfSecondsElapsed / 10F).ToString("0.0s");
-      if (matchesFound == 8)
-      {
-        timer.Stop();
-        TimeTextBlock.Text += " - Play again?";
-      }
+      if (matchesFound != 8) return;
+      timer.Stop();
+      TimeTextBlock.Text += " - Play again?";
     }
 
     private void SetUpGame()
@@ -62,11 +60,19 @@ namespace MatchGame
 
       foreach (TextBlock textBlock in MainGrid.Children.OfType<TextBlock>())
       {
-        int index = random.Next(animalEmoji.Count);
-        string nextEmoji = animalEmoji[index];
-        textBlock.Text = nextEmoji;
-        animalEmoji.RemoveAt(index);
+        if (textBlock.Name != "TimeTextBlock")
+        {
+          textBlock.Visibility = Visibility.Visible;
+          int index = random.Next(animalEmoji.Count);
+          string nextEmoji = animalEmoji[index];
+          textBlock.Text = nextEmoji;
+          animalEmoji.RemoveAt(index);
+        }
       }
+
+      timer.Start();
+      tenthsOfSecondsElapsed = 0;
+      matchesFound = 0;
     }
 
     TextBlock lastTextBlockClicked;
@@ -83,6 +89,7 @@ namespace MatchGame
       }
       else if (textBlock.Text == lastTextBlockClicked.Text)
       {
+        matchesFound++;
         textBlock.Visibility = Visibility.Hidden;
         findingMatch = false;
       }

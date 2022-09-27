@@ -132,5 +132,15 @@
                Grid.Column="3"
                FontSize="36"
                MouseDown="TextBlock_MouseDown" />
+    <TextBlock
+      x:Name="TimeTextBlock"
+      Text="Elapsed time:"
+      FontSize="36"
+      HorizontalAlignment="Center"
+      VerticalAlignment="Center"
+      TextWrapping="Wrap"
+      Grid.Row="4"
+      Grid.ColumnSpan="4" Grid.Column="0" MouseDown="TimeTextBlock_MouseDown"
+      />
   </Grid>
 </Window>
